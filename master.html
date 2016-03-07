@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Rubber Duck</title>
+	<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+	<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+	<script type="text/javascript" src='js/jstree_pre1.0_stable/jquery.jstree.js'></script>
+
+	 <!-- Ace -->
+	<script type="text/javascript" src='js/Ace/ace.js'></script>
+	<script type="text/javascript" src='js/Ace/ext-language_tools.js'></script>
+	<script type="text/javascript" src='js/functions.js'></script>
+	
+	<!-- env Controllers -->
+    <script type="text/javascript" src='js/env/tree.js'></script>
+    <script type="text/javascript" src='js/env/code.js'></script>
+    <script type="text/javascript" src='js/env/trans.js'></script>
+    <script type="text/javascript" src='js/env/controller.js'></script>
+    <script type="text/javascript" src='js/env/layout.js'></script>
+    <script type="text/javascript" src='js/env/stats.js'></script>
+	<script type="text/javascript" src='js/env/sql.js'></script>
+
+	<link rel="stylesheet" href='styles/style.css'>
+	<link rel="stylesheet" href='styles/tree.css'>
+
+    <link rel="stylesheet" href='JS/flexigrid/css/flexigrid.css'>
+	<script type="text/javascript" src='JS/flexigrid/js/flexigrid.js'></script>
+
+    <script type="text/javascript" src='js/jquery-tooltip/jquery.tooltip.min.js'></script>
+    <script type="text/javascript" src='JS/fileuploader/fileuploader.js'></script>
+	
+	<script type="text/javascript" src='JS/inflection.js'></script>
+	<script type="text/javascript" src='JS/shortcut.js'></script>
+ 	<script type="text/javascript" src='JS/sqldesign.js'></script>
+	<script type="text/javascript" src='JS/sqlquery.js']></script>
+	<script type="text/javascript" src='JS/envsettings.js'></script>
+	
+	
+	<script type="text/javascript" src='js/jquery.dragsort-0.5.1.js'></script>
+	<script type="text/javascript" src='js/jquery-ui/js/jquery-ui-1.8.16.custom.min.js' ></script>
+	
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src=modules/go/js/html5.js"></script>
+	<![endif]-->
+	
+	<!-- --[popup menus]-- -->
+	<script type="text/javascript" src='JS/fancybox/jquery.fancybox-1.3.4.pack.js'></script>
+	<link rel="stylesheet" href='JS/fancybox/jquery.fancybox-1.3.4.css'>
+	
+	<script type="text/javascript" src="js/selectStyle.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/appTabs.js"></script>
+	<script type="text/javascript" src="js/resize.js"></script>
+	
+</head>
+<body>
+	<nav id="toolbar">
+		<a href="#" class="logo">HTML++ IDE</a>
+		<ul id="app_menu">
+			<li>
+				<a href="#" tabindex="1">File</a>
+				<ul>
+					<li id='mFileSave'><a href="#">Save</a> <em>ctrl+s</em></li>
+					<li id='mFileSaveAll'><a href="#">Save all</a> <em>ctrl+shift+s</em></li>
+					<li id='switchEditor'><a href="/go">Edit with old editor</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" tabindex="2">Settings</a>
+				<ul>
+					<li id='mSettingsZen'><a href="#">Zen Coding</a> <em></em></li>
+					<li id='mSettingsKeepTabs'><a href="#">Keep Open Tabs on Exit</a> <em></em></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" tabindex="3">Window</a>
+				<ul>
+					<li id='mWindowCloseAll'><a href="#">Close All</a> <em></em></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" tabindex="4">Help</a>
+				<ul>
+					<li><a class="pop" href="#docs" target="_blank">Shortcut Keys</a> <em></em></li>
+					<li><a href="http://www.htmlpp.com/introduction" target="_blank">Html++ docs</a> <em></em></li>
+				</ul>
+			</li>
+		</ul>
+
+		<!--<a id="btn_save" tabindex="5" class="tb_btn outline" href="#save">
+			<span>Save</span>
+			<img class="icon icon_save" src=modules/go3/images/n.gif" alt="save" />
+		</a>-->
+		<input type='button' id="btn_save" class="tb_btn" value="save" tabindex="5" />
+		
+		<form>
+			<input tabindex="6" type="text" placeholder="coding url" class="tb_btn outline" id="txtCodeUrl" />
+			<!--<a id="btn_run" tabindex="7" class="tb_btn outline" href="#run">
+				<span>Run</span>
+				<img class="icon icon_run" src=modules/go3/images/n.gif" alt="Run" />
+			</a>-->
+			<input type='submit' id="btn_run" tabindex="7" class="tb_btn run" value="Run" />
+			<span class="lnkStats">Stats</span>
+		</form>
+		
+		<form>
+			<input tabindex="8" type="text" placeholder="find in files" class="tb_btn outline" id="txtFindInFiles" />
+			<div class="tb_btn outline select_outline" id="select_filterType">
+				<select tabindex="9" class="selectStyle" id="selectFindInFilesTypes">
+					<option value='*.htm;*.html;*.config'>html</option>
+					<option value='*.js'>js</option>
+					<option value='*.css'>css</option>
+					<option value='*.*'>all</option>
+				</select>
+			</div>
+			<div class="tb_btn outline select_outline" id="select_filterRange">
+				<select tabindex="10" class="selectStyle" id="selectFindInFilesSite">
+					<option value='this'>This Site</option>
+					<option value='master'>Master</option>
+					<option value='all'>All Sites</option>
+				</select>
+			</div>
+			<!--<a tabindex="11" class="tb_btn outline" href="#find"> 
+				<span>Find</span>
+				<img class="icon icon_find" src=modules/go3/images/n.gif" alt="Find" />
+			</a>-->
+			<input type="submit" tabindex="11" class="tb_btn" value="Find" id="btnFindInFiles" />
+		</form>
+	</nav>
+	<div class="fit holder transhide">
+		<section id="navigator">
+			<header class="head">
+				<ul class="tabs_menu">
+					<li class="tab_menu_item active" data-uniq="#ftp-tab">
+						<span>FTP</span>
+					</li>
+					<li class="tab_menu_item" data-uniq="#sql-tab">
+						<span>SQL</span>
+					</li>
+				</ul>
+				<div id="findFiles" class="findFiles"><input type="text" id="txtFindFiles" placeholder="QuickFind (use spaces)" value="" id="txtFindFiles" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" /></div>
+			</header>
+			<div class="fit content">
+				<div class="tabs_content">
+					<div class="tab_content" id="ftp-tab">
+						<div class="ftptree">
+							<div id="envtree" class="vfill jstree jstree-0 jstree-default" style="width:100%;height:100%"></div>
+						</div>
+					</div>
+					<div class="tab_content" id="sql-tab">
+						<div class='sqltree'>
+							<div id="sqlmanager" class="vfill  jstree jstree-0 jstree-default" style="width:100%;height:100%"></div>
+							</div>
+					</div>
+					<div class="tab_content" id="modules-tab"></div>
+				</div>
+			</div>
+		</section>
+		<div class="dragger" id="drag_navigator"></div>
+		<section id="main">
+			<section id="editor" class="fit">
+				<header class="head">
+					<ul class="tabs_menu"></ul>
+					<button class="icon stateChanger" id="toggle_navigator"></button>
+				</header>
+				<div class="fit content">
+					<div id="editors_tabs_content" class="tabs_content">
+					</div>
+				</div>
+			</section>
+			<div class="dragger" id="drag_console"></div>	
+			<section id="console">
+				<header class="head">
+					<ul class="tabs_menu">
+						<li class="tab_menu_item active" data-uniq="#search-tab">
+							<span>Search</span>
+						</li>
+						<li class="tab_menu_item active" data-uniq="#sqlConsole-tab">
+							<span>SQL console</span>
+						</li>
+					</ul>
+					<button class="icon stateChanger" id="toggle_console"></button>
+				</header>
+				<div class="fit content">
+					<div class="tabs_content">
+						<div class="tab_content fit scrollable" id="search-tab">
+							   
+						</div>
+						<div class="tab_content fit scrollable" id="sqlConsole-tab">
+								+    SQL.. <br/>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+	</div>
+	<div style="display:none">
+		<div id="docs" class="popbox">
+			<h3 class="popbox_title">Help <i></i>Docs</h3>
+			<table class="shortcuts_table">
+				<tr>
+					<th colspan="2">Editor</th>
+				</tr>
+				<tr>
+					<td>Find</td>
+					<td class='shortcuts_key'>Ctrl+F</td>
+				</tr>
+				<tr>
+					<td>Replace</td>
+					<td class='shortcuts_key'>Ctrl+H</td>
+				</tr>
+				<tr>
+					<td>Go to Line</td>
+					<td class='shortcuts_key'>Ctrl+G</td>
+				</tr>
+				<tr>
+					<td>Duplicate Row (Zen Coding disabled)</td>
+					<td class='shortcuts_key'>Ctrl+D</td>
+				</tr>
+				<tr>
+					<td>Save</td>
+					<td class='shortcuts_key'>Ctrl+S</td>
+				</tr>
+				<tr>
+					<td>Save All</td>
+					<td class='shortcuts_key'>Ctrl+Shift+S</td>
+				</tr>
+			</table>
+			<table class="shortcuts_table">
+				<tr>
+					<th colspan="2">Tabs</th>
+				</tr>
+				<tr>
+					<td>Tab Right</td>
+					<td class='shortcuts_key'>Ctrl+&gt;</td>
+				</tr>
+				<tr>
+					<td>Tab Left</td>
+					<td class='shortcuts_key'>Ctrl+&lt;</td>
+				</tr>
+				<tr>
+					<td>Tab Quit</td>
+					<td class='shortcuts_key'>Ctrl+Q</td>
+				</tr>
+			</table>
+			<table class="shortcuts_table">
+				<tr>
+					<th colspan="2">General</th>
+				</tr>
+				<tr>
+					<td>Run</td>
+					<td class='shortcuts_key'>Ctrl+Enter</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+      
+	  $(function () {
+            $.envController({ envtree: $('#envtree'), sqlmanager: $('#sqlmanager'), envcode: $('#editor .tabs_menu'), tabsContainer: '#editors_tabs_content',
+				saveButton: $('#btn_save'), runButton: $('#btn_run'),
+                transTextbox: $('#txtCodeUrl'), transArea: $('.transhide'), envresults: $('#search-tab')
+            });
+
+			loadMenuSettings();
+			
+            $('#btn_run').click(function () {
+                if ($(this).hasClass('run')) {
+                    $(this).removeClass('run')
+                    $(this).addClass('stop')
+                    $(this).val('Stop')
+                    $('.lnkStats').addClass('active')
+                    $('.lnkStats').text('Stats').removeClass('continue')
+                    $.envController.showPreview();
+                }
+                else {
+                    $(this).addClass('run')
+                    $(this).removeClass('stop')
+                    $(this).val('Run')
+                    $('.lnkStats').text('Stats').removeClass('continue')
+                    $.envController.showCode();
+                }
+                return false;
+            });
+
+            $('.lnkStats').click(function () {
+                if (!$(this).hasClass('active'))
+                    return;
+                if (!$(this).hasClass('continue')) {
+					if ($('#btn_run').hasClass('stop'))
+						$('#btn_run').click()
+                    //$.envController.showCode();//{ pause: true });
+                    $.envController.showStats();
+                    //if ($('.stop').length) // show continue only if RUNNING
+                    //    $('.lnkStats').text('Continue').addClass('continue')
+                }
+                else {
+                    $.envController.showPreview({ cont: true });
+                    $('.stats').text('Stats').removeClass('continue')
+                }
+            });
+
+            $('#btnFindInFiles').click(function () {
+                $.envController.findInFiles({ exp: $('#txtFindInFiles').val(), types: $('#selectFindInFilesTypes').val(), sites: $('#selectFindInFilesSite').val() });
+				handleCon.trigger('restore');
+                return false;
+            });
+
+			// Menu
+			$('#app_menu li ul li').click(function(){
+				$(this).parent().hide().show(100);
+			});
+			$('#mFileSave').click(function(){
+				$.envController.save();
+			});
+			$('#mFileSaveAll').click(function(){
+				$.envController.save({saveAll: true});
+			});
+			$('#mWindowCloseAll').click(function(){
+				$.envController.closeTabs();
+			});
+			$('#mSettingsZen').click(function(){
+				var oldZen = $.envsettings.zen()
+				$.envsettings.zen(!oldZen)
+				loadMenuSettings();
+			});
+			$('#mSettingsKeepTabs').click(function(){
+				var oldKeep = $.envsettings.keepTabs()
+				$.envsettings.keepTabs(!oldKeep)
+				loadMenuSettings();
+			});
+            $('#txtFindFiles').autocomplete({ minLength: 2, autoFocus: true, source: $.envController.findFilesUrl(),
+                select: function (event, ui) {
+                    $.envController.loadCodeFile({ href: ui.item.fileHref, title: ui.item.fileTitle })
+                    $('#txtFindFiles').val('');
+                    return false;
+                },
+            });
+			
+			
+			//fancybox
+			$('.pop').fancybox();
+        });
+		
+		function loadMenuSettings(){
+			var enabled = ''
+			var zen = $.envsettings.zen()
+			if (zen) {enabled = 'Enabled'} else {enabled=''};
+			$('#mSettingsZen em').html(enabled);
+			
+			var keepTabs = $.envsettings.keepTabs()
+			if (keepTabs) {enabled = 'Enabled'} else {enabled=''};
+			$('#mSettingsKeepTabs em').html(enabled);
+		}
+		
+	  (function(){
+
+	  	// resize Handles
+		 window.handleNav = $('#drag_navigator').handle({
+	        master : '#navigator',
+	        slave  : '#main',
+	        orientation : 'right',
+	        minimum : 190,
+	        defaultPos : 250,
+	        onAfterChange : function() {
+	        	window.editorTabs.trigger('tooManyTabsCheck')
+	        }
+	    });
+
+		window.handleCon  = $('#drag_console').handle({
+	        master : '#console',
+	        slave  : '#editor',
+	        orientation : 'bottom',
+	        minimum : 35,
+	        defaultPos : 190
+	    });
+
+		$('#toggle_console').click(function(){
+			handleCon.trigger('toggle');
+		})
+
+		$('#toggle_navigator').click(function(){
+			//console.log($(this))
+			handleNav.trigger('toggle');
+		})
+
+	    // Tabs
+		$('#console .tabs_menu, #navigator .tabs_menu').appTabs()
+		
+		// selectStyle
+		$('select.selectStyle').selectStyle();
+	  })();
+	  
+    </script>
+</body>
+</html>

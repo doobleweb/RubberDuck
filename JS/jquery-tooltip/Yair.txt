@@ -1,0 +1,2 @@
+﻿12.4.12 - added handler to .mousedown - just so it would act as .click
+this was needed so when closing a tab in Html++ DEV with mid-button tooltip will disappear

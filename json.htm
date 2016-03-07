@@ -1,0 +1,53 @@
+@{
+    var action = [[Q:Action]].toLowerCase();
+    var value = [[Q:value]];
+    var value2 = [[Q:value2]];
+    $server.responseType('application/json')
+    $studio.disableStats();
+    var isSuperAdmin = false;
+    if ([[Users.Roles.ID where="Users.Roles.Name='Studio Super Editors'" ]])
+        isSuperAdmin = true;
+
+    switch (action){
+        case 'getdir':
+            $server.json($studio.getDirectories(value, true, isSuperAdmin))
+            break;
+        case 'getfile':
+            $server.responseType('text/html')
+            $server.json($studio.getFile(value))
+            break;
+        case 'renamefile':
+            $server.json($studio.renameFile(value, value2))
+            break;
+        case 'removefile':
+            $server.json($studio.removeFile(value))
+            break;
+        case 'savefile':
+            $server.json($studio.saveFile(value, $server.form('content')))
+            break;
+        case 'create':
+            $server.json($studio.create(value, value2, [[Q:FileType]], [[Q:File]]))
+            break;
+        case 'findinfiles':
+            $server.json($studio.findInFiles(value, $server.form('exp'), $server.qs('types')))
+            break;
+        case 'findfiles':
+            $server.json($studio.findFiles($server.qs('term')))
+            break;
+        case 'getstats':
+            $server.json($studio.getStatsAndClear(value))
+            break;
+         case 'download':
+            $studio.download(value, $server.qs('type'))
+            break;
+        case 'uploadfile':
+            $studio.uploadFile($server.qs('folder'), $server.qs('qqFile'))
+            break;
+        case 'uploadarchive':
+            $studio.uploadArchive($server.qs('folder'), $server.qs('qqFile'))
+            break;
+		case 'createsite':
+            $custom.createSite($server.qs('value'), $server.qs('domain'))
+            break;
+    }
+}@
