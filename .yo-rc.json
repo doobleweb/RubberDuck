@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "rubberDuck",
+    "style": "css",
+    "postcss": false
+  }
+}
